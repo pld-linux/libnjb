@@ -1,12 +1,12 @@
+Summary:	A software library for talking to the Creative Nomad Jukebox
 Name:		libnjb
 Version:	2.0
 Release:	1
-Summary:	A software library for talking to the Creative Nomad Jukebox
-URL:		http://sourceforge.net/projects/libnjb
-Group:		Libraries
-Source0:	http://osdl.sourceforge.net/sourceforge/libnjb/%{name}-%{version}.tar.gz
-# Source0-md5:	3f8b1d8a4e48d87cb78b2a6431fddb76
 License:	BSD
+Group:		Libraries
+Source0:	http://mesh.dl.sourceforge.net/sourceforge/libnjb/%{name}-%{version}.tar.gz
+# Source0-md5:	3f8b1d8a4e48d87cb78b2a6431fddb76
+URL:		http://sourceforge.net/projects/libnjb
 BuildRequires:	libusb-devel
 Requires:	libusb
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
