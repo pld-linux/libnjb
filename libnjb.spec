@@ -48,7 +48,7 @@ rm -r $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS CHANGES FAQ INSTALL LICENSE HACKING
+%doc AUTHORS CHANGES FAQ HACKING LICENSE README
 %{_prefix}/lib/*.so
 %{_prefix}/lib/*.a
 %{_prefix}/lib/*.la
