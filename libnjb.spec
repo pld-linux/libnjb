@@ -63,14 +63,15 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
 
 %{__make} install \
-	prefix=$RPM_BUILD_ROOT \
+	prefix=$RPM_BUILD_ROOT%{_prefix} \
 	libdir=$RPM_BUILD_ROOT%{_libdir} \
-	includedir=$RPM_BUILD_ROOT%{_includedir}
+	includedir=$RPM_BUILD_ROOT%{_includedir}/libnjb
 
+%if "%{_lib}" != "lib"
 install -d $RPM_BUILD_ROOT%{_pkgconfigdir}
-install -c $RPM_BUILD_ROOT/lib/pkgconfig/libnjb.pc $RPM_BUILD_ROOT%{_pkgconfigdir}/libnjb.pc
-install -d $RPM_BUILD_ROOT%{_includedir}/libnjb
-install -c $RPM_BUILD_ROOT%{_includedir}/libnjb.h $RPM_BUILD_ROOT%{_includedir}/libnjb/libnjb.h
+mv -f $RPM_BUILD_ROOT%{_prefix}/lib/pkgconfig/libnjb.pc $RPM_BUILD_ROOT%{_pkgconfigdir}/libnjb.pc
+%endif
+
 install nomadjukebox $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
 install nomad.usermap $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
 
@@ -83,15 +84,15 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS CHANGES FAQ HACKING README
-%attr(755,root,root) %{_libdir}/lib*.so
+%attr(755,root,root) %{_libdir}/libnjb-2.0.so
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
+%attr(755,root,root) %{_libdir}/libnjb.so
+%{_libdir}/libnjb.la
 %{_includedir}/libnjb
 %{_pkgconfigdir}/*.pc
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libnjb.a
