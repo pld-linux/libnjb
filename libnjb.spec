@@ -5,10 +5,8 @@ Version:	2.0
 Release:	1
 License:	BSD
 Group:		Libraries
-Source0:	%{name}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/libnjb/%{name}-%{version}.tar.gz
 # Source0-md5:	3f8b1d8a4e48d87cb78b2a6431fddb76
-Source1:	http://dl.sourceforge.net/libnjb/%{name}-%{version}.tar.gz
-# Source1-md5:	3f8b1d8a4e48d87cb78b2a6431fddb76
 URL:		http://libnjb.sf.net/
 BuildRequires:	libusb-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -57,28 +55,24 @@ Statyczna biblioteka njb.
 %setup -q
 
 %build
-CFLAGS="%{rpmcflags}"
-%configure \
-	--prefix=%{_prefix} \
-	--libdir=%{_libdir}
+%configure
 %{__make} lib
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
 
-%{__make} prefix=$RPM_BUILD_ROOT \
-		libdir=$RPM_BUILD_ROOT/%{_libdir} \
-		includedir=$RPM_BUILD_ROOT/%{_includedir} \
-		install
+%{__make} install \
+	prefix=$RPM_BUILD_ROOT \
+	libdir=$RPM_BUILD_ROOT%{_libdir} \
+	includedir=$RPM_BUILD_ROOT%{_includedir}
 
-install -d $RPM_BUILD_ROOT%{_prefix}/lib/pkgconfig
-install -c $RPM_BUILD_ROOT/lib/pkgconfig/libnjb.pc $RPM_BUILD_ROOT%{_prefix}/lib/pkgconfig/libnjb.pc
+install -d $RPM_BUILD_ROOT%{_pkgconfigdir}
+install -c $RPM_BUILD_ROOT/lib/pkgconfig/libnjb.pc $RPM_BUILD_ROOT%{_pkgconfigdir}/libnjb.pc
 install -d $RPM_BUILD_ROOT%{_includedir}/libnjb
 install -c $RPM_BUILD_ROOT%{_includedir}/libnjb.h $RPM_BUILD_ROOT%{_includedir}/libnjb/libnjb.h
 install nomadjukebox $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
 install nomad.usermap $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
-
 
 %clean
 rm -rf $RPM_BUILD_ROOT
