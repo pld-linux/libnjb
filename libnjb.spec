@@ -1,4 +1,5 @@
 Summary:	A software library for talking to the Creative Nomad Jukebox
+Summary(pl):	Biblioteka do komunikowania siê z Creative Nomad Jukebox
 Name:		libnjb
 Version:	2.0
 Release:	1
@@ -14,6 +15,10 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 This package provides a software library for communicating with the
 Creative Nomad Jukebox line of MP3 players.
+
+%description -l pl
+Pakiet ten dostarcza bibliotekê do komunikowania siê z odtwarzaczem MP3 
+Creative Nomad Jukebox.
 
 %prep
 %setup -q
