@@ -6,9 +6,9 @@ Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	%{name}-%{version}.tar.gz
-# Source0-md5:	
+# Source0-md5:	3f8b1d8a4e48d87cb78b2a6431fddb76
 Source1:	http://kent.dl.sourceforge.net/sourceforge/%{name}/%{name}-%{version}.tar.gz
-# Source1-md5:
+# Source1-md5:	3f8b1d8a4e48d87cb78b2a6431fddb76
 URL:		http://libnjb.sf.net/
 BuildRequires:	libusb-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -68,9 +68,9 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
 		includedir=$RPM_BUILD_ROOT/%{_includedir} \
 		install
 
-install -d -m 755 $RPM_BUILD_ROOT/usr/lib/pkgconfig
+install -d $RPM_BUILD_ROOT/usr/lib/pkgconfig
 install -c $RPM_BUILD_ROOT/lib/pkgconfig/libnjb.pc $RPM_BUILD_ROOT/usr/lib/pkgconfig/libnjb.pc
-install -d -m 755 $RPM_BUILD_ROOT/usr/include/libnjb
+install -d $RPM_BUILD_ROOT/usr/include/libnjb
 install -c $RPM_BUILD_ROOT/usr/include/libnjb.h $RPM_BUILD_ROOT/usr/include/libnjb/libnjb.h
 install nomadjukebox $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
 install nomad.usermap $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
