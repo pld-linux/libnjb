@@ -7,7 +7,7 @@ License:	BSD
 Group:		Libraries
 Source0:	%{name}-%{version}.tar.gz
 # Source0-md5:	3f8b1d8a4e48d87cb78b2a6431fddb76
-Source1:	http://kent.dl.sourceforge.net/sourceforge/%{name}/%{name}-%{version}.tar.gz
+Source1:	http://dl.sourceforge.net/libnjb/%{name}-%{version}.tar.gz
 # Source1-md5:	3f8b1d8a4e48d87cb78b2a6431fddb76
 URL:		http://libnjb.sf.net/
 BuildRequires:	libusb-devel
@@ -56,7 +56,9 @@ Statyczna biblioteka njb.
 
 %build
 CFLAGS="%{rpmcflags}"
-./configure --prefix=%{_prefix} --libdir=%{_libdir}
+%configure \
+	--prefix=%{_prefix} \
+	--libdir=%{_libdir}
 %{__make} lib
 
 %install
@@ -84,7 +86,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS README
+%doc AUTHORS CHANGES FAQ HACKING README
 %attr(755,root,root) %{_libdir}/lib*.so
 
 %files devel
