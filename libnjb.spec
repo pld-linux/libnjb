@@ -14,18 +14,20 @@ BuildRequires:	libusb-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-libnjb is a C library and API for communicating with the Creative Nomad JukeBox
-and Dell DJ digital audio players under BSD, Linux, Mac OS X and Windows. The
-protocol these devices use is presumably called PDE (Portable Digital
-Entertainment protocol) at Creative. Newer devices using the Microsoft MTP
-(Media Transfer Protocol) are NOT supported
+libnjb is a C library and API for communicating with the Creative
+Nomad JukeBox and Dell DJ digital audio players under BSD, Linux, Mac
+OS X and Windows. The protocol these devices use is presumably called
+PDE (Portable Digital Entertainment protocol) at Creative. Newer
+devices using the Microsoft MTP (Media Transfer Protocol) are NOT
+supported
 
 %description -l pl
-libnjb jest bibliotek± C jak równie¿ API u¿ywanym do komunikacji z Creative
-Nomad JukeBox i cyfrowym odtwarzaczem muzyki Dell DJ dla platform BSD, Linux,
-Mac IS X i Windows. Protokó³ jest przypuszczalnie nazwany przez Creative PDE
-(Portable Digital Entertainment protocol). Nowsze urz±dzenia u¿ywaj±ce
-Microsoft MTP (Media transfer Protocol) NIE s± obs³ugiwane.
+libnjb jest bibliotek± C jak równie¿ API u¿ywanym do komunikacji z
+Creative Nomad JukeBox i cyfrowym odtwarzaczem muzyki Dell DJ dla
+platform BSD, Linux, Mac IS X i Windows. Protokó³ jest przypuszczalnie
+nazwany przez Creative PDE (Portable Digital Entertainment protocol).
+Nowsze urz±dzenia u¿ywaj±ce Microsoft MTP (Media transfer Protocol)
+NIE s± obs³ugiwane.
 
 %package devel
 Summary:	Header files for njb library
@@ -70,10 +72,10 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
 		includedir=$RPM_BUILD_ROOT/%{_includedir} \
 		install
 
-install -d $RPM_BUILD_ROOT/usr/lib/pkgconfig
-install -c $RPM_BUILD_ROOT/lib/pkgconfig/libnjb.pc $RPM_BUILD_ROOT/usr/lib/pkgconfig/libnjb.pc
-install -d $RPM_BUILD_ROOT/usr/include/libnjb
-install -c $RPM_BUILD_ROOT/usr/include/libnjb.h $RPM_BUILD_ROOT/usr/include/libnjb/libnjb.h
+install -d $RPM_BUILD_ROOT%{_prefix}/lib/pkgconfig
+install -c $RPM_BUILD_ROOT/lib/pkgconfig/libnjb.pc $RPM_BUILD_ROOT%{_prefix}/lib/pkgconfig/libnjb.pc
+install -d $RPM_BUILD_ROOT%{_includedir}/libnjb
+install -c $RPM_BUILD_ROOT%{_includedir}/libnjb.h $RPM_BUILD_ROOT%{_includedir}/libnjb/libnjb.h
 install nomadjukebox $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
 install nomad.usermap $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
 
