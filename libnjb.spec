@@ -41,7 +41,7 @@ Pliki nag³ówkowe biblioteki njb.
 
 %package static
 Summary:	Static njb library
-Summary(pl):	Statyczna biblioteka FOO
+Summary(pl):	Statyczna biblioteka njb
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
