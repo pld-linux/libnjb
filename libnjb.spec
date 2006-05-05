@@ -2,12 +2,13 @@ Summary:	API interface to talk to Zen Creative devices
 Summary(pl):	Interfejs API do komunikacji z urz±dzeniami Zen Creative
 Name:		libnjb
 Version:	2.2.5
-Release:	0.1
+Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/libnjb/%{name}-%{version}.tar.gz
 # Source0-md5:	f7461574b9a28ed1c79fb40d3d307d78
 Patch0:		%{name}-ncurses.patch
+Patch1:		%{name}-Makefile.patch
 URL:		http://libnjb.sourceforge.net/
 BuildRequires:	libusb-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -55,6 +56,7 @@ Statyczna biblioteka njb.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %configure
@@ -67,7 +69,8 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
 %{__make} install \
 	prefix=$RPM_BUILD_ROOT%{_prefix} \
 	libdir=$RPM_BUILD_ROOT%{_libdir} \
-	includedir=$RPM_BUILD_ROOT%{_includedir}/libnjb
+	includedir=$RPM_BUILD_ROOT%{_includedir}/libnjb \
+	bindir=$RPM_BUILD_ROOT%{_bindir} \
 
 %if "%{_lib}" != "lib"
 install -d $RPM_BUILD_ROOT%{_pkgconfigdir}
@@ -85,12 +88,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS CHANGES FAQ HACKING README
-%attr(755,root,root) %{_libdir}/libnjb-2.0.so
+%doc AUTHORS ChangeLog FAQ HACKING README
+%attr(755,root,root) %{_libdir}/libnjb.so*.*
+%attr(755,root,root) %{_bindir}/njb-*
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libnjb.so
 %{_libdir}/libnjb.la
 %{_includedir}/libnjb
 %{_pkgconfigdir}/*.pc
