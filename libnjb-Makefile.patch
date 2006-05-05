@@ -1,0 +1,13 @@
+--- libnjb-2.2.5/doc/Makefile.in	2006-01-29 20:43:51.000000000 +0100
++++ libnjb-2.2.5.new/doc/Makefile.in	2006-05-05 15:50:23.641943154 +0200
+@@ -338,8 +338,8 @@
+ @HAVE_DOXYGEN_TRUE@	doxygen
+ 
+ @HAVE_DOXYGEN_TRUE@install-data-local:
+-@HAVE_DOXYGEN_TRUE@	$(INSTALL) -d $(DESTDIR)$(htmldocdir)
+-@HAVE_DOXYGEN_TRUE@	$(INSTALL_DATA) html/* $(DESTDIR)$(htmldocdir)
++@HAVE_DOXYGEN_TRUE@	$(INSTALL) -d $RPM_BUILD_ROOT$(DESTDIR)$(htmldocdir)
++@HAVE_DOXYGEN_TRUE@	$(INSTALL_DATA) html/* $RPM_BUILD_ROOT$(DESTDIR)$(htmldocdir)
+ 
+ @HAVE_DOXYGEN_TRUE@uninstall-local:
+ @HAVE_DOXYGEN_TRUE@	$(RM) -r $(DESTDIR)$(htmldocdir)
