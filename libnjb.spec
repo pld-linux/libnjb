@@ -69,12 +69,8 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
-
-%if "%{_lib}" != "lib"
-install -d $RPM_BUILD_ROOT%{_pkgconfigdir}
-mv -f $RPM_BUILD_ROOT%{_prefix}/lib/pkgconfig/libnjb.pc $RPM_BUILD_ROOT%{_pkgconfigdir}/libnjb.pc
-%endif
+	DESTDIR=$RPM_BUILD_ROOT \
+	includedir=%{_includedir}/%{name}
 
 install nomadjukebox $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
 install nomad.usermap $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
@@ -93,9 +89,9 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libnjb.so
-%attr(755,root,root) %{_libdir}/libnjb.so.*
+%attr(755,root,root) %{_libdir}/libnjb.so.?
 %{_libdir}/libnjb.la
-%{_includedir}/*
+%{_includedir}/%{name}
 %{_pkgconfigdir}/*.pc
 
 %files static
