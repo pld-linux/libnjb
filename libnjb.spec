@@ -1,13 +1,14 @@
 Summary:	API interface to talk to Zen Creative devices
 Summary(pl):	Interfejs API do komunikacji z urz±dzeniami Zen Creative
 Name:		libnjb
-Version:	2.0
-Release:	1
+Version:	2.2.5
+Release:	0.1
 License:	BSD
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/libnjb/%{name}-%{version}.tar.gz
-# Source0-md5:	3f8b1d8a4e48d87cb78b2a6431fddb76
-URL:		http://libnjb.sf.net/
+# Source0-md5:	f7461574b9a28ed1c79fb40d3d307d78
+Patch0:		%{name}-ncurses.patch
+URL:		http://libnjb.sourceforge.net/
 BuildRequires:	libusb-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -53,10 +54,11 @@ Statyczna biblioteka njb.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %configure
-%{__make} lib
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
