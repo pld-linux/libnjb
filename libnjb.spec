@@ -1,11 +1,8 @@
-#
-# TODO: -utils subpackage? if not, remove ncurses dependence
-#
 Summary:	API interface to talk to Zen Creative devices
 Summary(pl):	Interfejs API do komunikacji z urz±dzeniami Zen Creative
 Name:		libnjb
 Version:	2.2.5
-Release:	0.1
+Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/libnjb/%{name}-%{version}.tar.gz
@@ -55,6 +52,18 @@ Static njb library.
 %description static -l pl
 Statyczna biblioteka njb.
 
+%package utils
+Summary:	njb utilities
+Summary(pl):	Narzedzia njb
+Group:		Development/Tools
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description utils
+Utilities for njb library.
+
+%description utils -l pl
+Narzedzia dla biblioteki njb.
+
 %prep
 %setup -q
 
@@ -89,7 +98,6 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libnjb.so
-%attr(755,root,root) %{_libdir}/libnjb.so.?
 %{_libdir}/libnjb.la
 %{_includedir}/%{name}
 %{_pkgconfigdir}/*.pc
@@ -97,3 +105,7 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libnjb.a
+
+%files utils
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/njb*
