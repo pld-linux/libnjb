@@ -54,7 +54,7 @@ Statyczna biblioteka njb.
 
 %package utils
 Summary:	njb utilities
-Summary(pl):	Narzedzia njb
+Summary(pl):	Narzêdzia njb
 Group:		Development/Tools
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -62,7 +62,7 @@ Requires:	%{name}-devel = %{version}-%{release}
 Utilities for njb library.
 
 %description utils -l pl
-Narzedzia dla biblioteki njb.
+Narzêdzia dla biblioteki njb.
 
 %prep
 %setup -q
