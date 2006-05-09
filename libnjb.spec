@@ -33,6 +33,7 @@ Summary:	Header files for njb library
 Summary(pl):	Pliki nag³ówkowe biblioteki libnjb
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	libusb-devel
 
 %description devel
 Header files for njb library.
