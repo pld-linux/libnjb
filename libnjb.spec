@@ -1,5 +1,5 @@
 Summary:	API interface to talk to Zen Creative devices
-Summary(pl):	Interfejs API do komunikacji z urz±dzeniami Zen Creative
+Summary(pl.UTF-8):   Interfejs API do komunikacji z urzÄ…dzeniami Zen Creative
 Name:		libnjb
 Version:	2.2.5
 Release:	2
@@ -20,17 +20,17 @@ PDE (Portable Digital Entertainment protocol) at Creative. Newer
 devices using the Microsoft MTP (Media Transfer Protocol) are NOT
 supported
 
-%description -l pl
-libnjb jest bibliotek± C jak równie¿ API u¿ywanym do komunikacji z
+%description -l pl.UTF-8
+libnjb jest bibliotekÄ… C jak rÃ³wnieÅ¼ API uÅ¼ywanym do komunikacji z
 Creative Nomad JukeBox i cyfrowym odtwarzaczem muzyki Dell DJ dla
-platform BSD, Linux, Mac IS X i Windows. Protokó³ jest przypuszczalnie
+platform BSD, Linux, Mac IS X i Windows. ProtokÃ³Å‚ jest przypuszczalnie
 nazwany przez Creative PDE (Portable Digital Entertainment protocol).
-Nowsze urz±dzenia u¿ywaj±ce Microsoft MTP (Media transfer Protocol)
-NIE s± obs³ugiwane.
+Nowsze urzÄ…dzenia uÅ¼ywajÄ…ce Microsoft MTP (Media transfer Protocol)
+NIE sÄ… obsÅ‚ugiwane.
 
 %package devel
 Summary:	Header files for njb library
-Summary(pl):	Pliki nag³ówkowe biblioteki libnjb
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe biblioteki libnjb
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	libusb-devel
@@ -38,32 +38,32 @@ Requires:	libusb-devel
 %description devel
 Header files for njb library.
 
-%description devel -l pl
-Pliki nag³ówkowe biblioteki njb.
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe biblioteki njb.
 
 %package static
 Summary:	Static njb library
-Summary(pl):	Statyczna biblioteka njb
+Summary(pl.UTF-8):   Statyczna biblioteka njb
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static njb library.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczna biblioteka njb.
 
 %package utils
 Summary:	njb utilities
-Summary(pl):	Narzêdzia njb
+Summary(pl.UTF-8):   NarzÄ™dzia njb
 Group:		Development/Tools
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description utils
 Utilities for njb library.
 
-%description utils -l pl
-Narzêdzia dla biblioteki njb.
+%description utils -l pl.UTF-8
+NarzÄ™dzia dla biblioteki njb.
 
 %prep
 %setup -q
