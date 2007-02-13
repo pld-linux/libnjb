@@ -1,5 +1,5 @@
 Summary:	API interface to talk to Zen Creative devices
-Summary(pl.UTF-8):   Interfejs API do komunikacji z urządzeniami Zen Creative
+Summary(pl.UTF-8):	Interfejs API do komunikacji z urządzeniami Zen Creative
 Name:		libnjb
 Version:	2.2.5
 Release:	2
@@ -30,7 +30,7 @@ NIE są obsługiwane.
 
 %package devel
 Summary:	Header files for njb library
-Summary(pl.UTF-8):   Pliki nagłówkowe biblioteki libnjb
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libnjb
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	libusb-devel
@@ -43,7 +43,7 @@ Pliki nagłówkowe biblioteki njb.
 
 %package static
 Summary:	Static njb library
-Summary(pl.UTF-8):   Statyczna biblioteka njb
+Summary(pl.UTF-8):	Statyczna biblioteka njb
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -55,7 +55,7 @@ Statyczna biblioteka njb.
 
 %package utils
 Summary:	njb utilities
-Summary(pl.UTF-8):   Narzędzia njb
+Summary(pl.UTF-8):	Narzędzia njb
 Group:		Development/Tools
 Requires:	%{name}-devel = %{version}-%{release}
 
