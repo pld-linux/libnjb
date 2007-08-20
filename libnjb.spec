@@ -1,3 +1,7 @@
+#
+# Conditional build:
+%bcond_without	static_libs	# don't build static library
+#
 Summary:	API interface to talk to Zen Creative devices
 Summary(pl.UTF-8):	Interfejs API do komunikacji z urządzeniami Zen Creative
 Name:		libnjb
@@ -69,7 +73,8 @@ Narzędzia dla biblioteki njb.
 %setup -q
 
 %build
-%configure
+%configure \
+	%{!?with_static_libs:--disable-static}
 %{__make} \
 	CC="%{__cc}" \
 	CFLAGS="%{rpmcflags} -I/usr/include/ncurses"
@@ -103,9 +108,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/%{name}
 %{_pkgconfigdir}/*.pc
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libnjb.a
+%endif
 
 %files utils
 %defattr(644,root,root,755)
