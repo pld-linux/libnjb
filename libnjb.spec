@@ -5,13 +5,18 @@
 Summary:	API interface to talk to Zen Creative devices
 Summary(pl.UTF-8):	Interfejs API do komunikacji z urządzeniami Zen Creative
 Name:		libnjb
-Version:	2.2.6
-Release:	4
+Version:	2.2.7
+Release:	1
 License:	BSD
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/libnjb/%{name}-%{version}.tar.gz
-# Source0-md5:	e1b3a89f6157c553ea46a78446429a0d
+Source0:	http://downloads.sourceforge.net/libnjb/%{name}-%{version}.tar.gz
+# Source0-md5:	73f25f3297abe316dd0abec921781d50
+Patch0:		docs.patch
 URL:		http://libnjb.sourceforge.net/
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	doxygen
+BuildRequires:	libtool
 BuildRequires:	libusb-compat-devel
 BuildRequires:	ncurses-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -71,8 +76,14 @@ Narzędzia dla biblioteki njb.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
+%{__libtoolize}
+%{__aclocal}
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure \
 	%{!?with_static_libs:--disable-static}
 %{__make} \
@@ -100,9 +111,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog FAQ HACKING README
 %attr(755,root,root) %{_libdir}/libnjb.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libnjb.so.5
 
 %files devel
 %defattr(644,root,root,755)
+%doc doc/html/*
 %attr(755,root,root) %{_libdir}/libnjb.so
 %{_libdir}/libnjb.la
 %{_includedir}/%{name}
