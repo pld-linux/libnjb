@@ -1,6 +1,8 @@
+# TODO: udev support?
 #
 # Conditional build:
 %bcond_without	static_libs	# don't build static library
+%bcond_with	hotplug		# old-style hotplug support in -utils
 #
 Summary:	API interface to talk to Zen Creative devices
 Summary(pl.UTF-8):	Interfejs API do komunikacji z urządzeniami Zen Creative
@@ -62,6 +64,17 @@ Static njb library.
 %description static -l pl.UTF-8
 Statyczna biblioteka njb.
 
+%package apidocs
+Summary:	API documentation for njb library
+Summary(pl.UTF-8):	Dokumentacja API biblioteki njb
+Group:		Documentation
+
+%description apidocs
+API documentation for njb library.
+
+%description apidocs -l pl.UTF-8
+Dokumentacja API biblioteki njb.
+
 %package utils
 Summary:	njb utilities
 Summary(pl.UTF-8):	Narzędzia njb
@@ -98,8 +111,13 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
 	DESTDIR=$RPM_BUILD_ROOT \
 	includedir=%{_includedir}/%{name}
 
+# obsoleted by pkg-config
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libnjb.la
+
+%if %{with hotplug}
 install nomadjukebox $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
 install nomad.usermap $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -115,11 +133,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc doc/html/*
 %attr(755,root,root) %{_libdir}/libnjb.so
-%{_libdir}/libnjb.la
 %{_includedir}/%{name}
-%{_pkgconfigdir}/*.pc
+%{_pkgconfigdir}/libnjb.pc
 
 %if %{with static_libs}
 %files static
@@ -127,6 +143,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libnjb.a
 %endif
 
+%files apidocs
+%defattr(644,root,root,755)
+%doc doc/html/*
+
 %files utils
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/njb*
+%attr(755,root,root) %{_bindir}/njb-*
+%if %{with hotplug}
+%attr(755,root,root) %{_sysconfdir}/hotplug/usb/nomadjukebox
+%{_sysconfdir}/hotplug/usb/nomad.usermap
+%endif
