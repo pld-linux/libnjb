@@ -15,12 +15,13 @@ Source0:	http://downloads.sourceforge.net/libnjb/%{name}-%{version}.tar.gz
 # Source0-md5:	73f25f3297abe316dd0abec921781d50
 Patch0:		docs.patch
 URL:		http://libnjb.sourceforge.net/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
 BuildRequires:	doxygen
 BuildRequires:	libtool
 BuildRequires:	libusb-compat-devel
 BuildRequires:	ncurses-devel
+BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -98,6 +99,7 @@ Narzędzia dla biblioteki njb.
 %{__autoheader}
 %{__automake}
 %configure \
+	%{?with_hotplug:--enable-hotplugging} \
 	%{!?with_static_libs:--disable-static}
 %{__make} \
 	CC="%{__cc}" \
@@ -105,7 +107,6 @@ Narzędzia dla biblioteki njb.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
@@ -113,11 +114,6 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
 
 # obsoleted by pkg-config
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libnjb.la
-
-%if %{with hotplug}
-install nomadjukebox $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
-install nomad.usermap $RPM_BUILD_ROOT%{_sysconfdir}/hotplug/usb
-%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -151,6 +147,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/njb-*
 %if %{with hotplug}
-%attr(755,root,root) %{_sysconfdir}/hotplug/usb/nomadjukebox
-%{_sysconfdir}/hotplug/usb/nomad.usermap
+%attr(755,root,root) /etc/hotplug/usb/nomadjukebox
+/etc/hotplug/usb/nomad.usermap
 %endif
