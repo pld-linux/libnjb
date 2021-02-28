@@ -69,9 +69,7 @@ Statyczna biblioteka njb.
 Summary:	API documentation for njb library
 Summary(pl.UTF-8):	Dokumentacja API biblioteki njb
 Group:		Documentation
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description apidocs
 API documentation for njb library.
