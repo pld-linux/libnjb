@@ -1,0 +1,192 @@
+--- libnjb-2.2.7/src/protocol3.c.orig	2026-03-15 11:28:39.809495076 +0100
++++ libnjb-2.2.7/src/protocol3.c	2026-03-15 11:29:44.876565621 +0100
+@@ -1803,18 +1803,12 @@
+   return bread;
+ }
+ 
+-static int get_metadata_chunks(njb,
+-			       command_block,
+-			       command_block_size,
+-			       create_metadata_post,
+-			       add_to_metadata_post,
+-			       terminate_metadata_post)
+-     njb_t *njb;
+-     unsigned char *command_block;
+-     int command_block_size;
+-     int (*create_metadata_post) ();
+-     int (*add_to_metadata_post) ();
+-     int (*terminate_metadata_post) ();
++static int get_metadata_chunks(njb_t *njb,
++			       unsigned char *command_block,
++			       int command_block_size,
++			       int (*create_metadata_post) (u_int32_t, unsigned char **),
++			       int (*add_to_metadata_post) (u_int16_t, u_int16_t, unsigned char *, unsigned char **),
++			       int (*terminate_metadata_post) (njb_t *, unsigned char **))
+ {
+   __dsub= "get_metadata_chunks";
+ 
+@@ -2027,18 +2021,12 @@
+  * read in blocks, but just parse monolithic blocks in memory.
+  * Currently only used by the key parser.
+  */
+-static int parse_metadata_block(njb,
+-				data,
+-				size,
+-				create_metadata_post,
+-				add_to_metadata_post,
+-				terminate_metadata_post)
+-     njb_t *njb;
+-     unsigned char *data;
+-     u_int32_t size;
+-     int (*create_metadata_post) ();
+-     int (*add_to_metadata_post) ();
+-     int (*terminate_metadata_post) ();
++static int parse_metadata_block(njb_t *njb,
++				unsigned char *data,
++				u_int32_t size,
++				int (*create_metadata_post) (u_int32_t, unsigned char **),
++				int (*add_to_metadata_post) (u_int16_t, u_int16_t, unsigned char *, unsigned char **),
++				int (*terminate_metadata_post) (njb_t *, unsigned char **))
+ {
+   u_int32_t i = 0;
+   unsigned char *target;
+@@ -2118,9 +2106,7 @@
+  * Tracklist scanning helper functions - called by the generic metadata
+  * scanning routine.
+  */
+-static int create_songid(postid, target)
+-     u_int32_t postid;
+-     unsigned char **target;
++static int create_songid(u_int32_t postid, unsigned char **target)
+ {
+   njb_songid_t *song = NULL;
+   /* Create a new song ID */
+@@ -2133,11 +2119,7 @@
+   return 0;
+ }
+ 
+-static int add_to_songid(frameid, framelen, data, target)
+-     u_int16_t frameid;
+-     u_int16_t framelen;
+-     unsigned char *data;
+-     unsigned char **target;
++static int add_to_songid(u_int16_t frameid, u_int16_t framelen, unsigned char *data, unsigned char **target)
+ {
+   njb_songid_t *song = (njb_songid_t *) *target;
+   njb_songid_frame_t *frame;
+@@ -2253,9 +2235,7 @@
+   return 0;
+ }
+ 
+-static int terminate_songid(njb, target)
+-     njb_t *njb;
+-     unsigned char **target;
++static int terminate_songid(njb_t *njb, unsigned char **target)
+ {
+   njb_songid_t *song = (njb_songid_t *) *target;
+   add_song_to_njb(njb, song);
+@@ -2754,9 +2734,7 @@
+  * Playlist scanning helper functions - called by the generic metadata
+  * scanning routine.
+  */
+-static int create_playlistid(postid, target)
+-     u_int32_t postid;
+-     unsigned char **target;
++static int create_playlistid(u_int32_t postid, unsigned char **target)
+ {
+   /* Then create a new playlist ID */
+   njb_playlist_t *pl = NJB_Playlist_New();
+@@ -2770,11 +2748,7 @@
+   return 0;
+ }
+ 
+-static int add_to_playlistid(frameid, framelen, data, target)
+-     u_int16_t frameid;
+-     u_int16_t framelen;
+-     unsigned char *data;
+-     unsigned char **target;
++static int add_to_playlistid(u_int16_t frameid, u_int16_t framelen, unsigned char *data, unsigned char **target)
+ {
+   njb_playlist_t *pl = (njb_playlist_t *) *target;
+   char *tmp;
+@@ -2794,9 +2768,7 @@
+   return 0;
+ }
+ 
+-static int terminate_playlistid(njb, target)
+-     njb_t *njb;
+-     unsigned char **target;
++static int terminate_playlistid(njb_t *njb, unsigned char **target)
+ {
+   njb_playlist_t *pl = (njb_playlist_t *) *target;
+   pl->_state = NJB_PL_UNCHANGED;
+@@ -2940,9 +2912,7 @@
+  * Datafile scanning helper functions - called by the generic metadata
+  * scanning routine.
+  */
+-static int create_datafile(postid, target)
+-     u_int32_t postid;
+-     unsigned char **target;
++static int create_datafile(u_int32_t postid, unsigned char **target)
+ {
+   /* Then create a new datafile ID */
+   njb_datafile_t *df = datafile_new();
+@@ -2955,11 +2925,7 @@
+ }
+ 
+ 
+-static int add_to_datafile(frameid, framelen, data, target)
+-     u_int16_t frameid;
+-     u_int16_t framelen;
+-     unsigned char *data;
+-     unsigned char **target;
++static int add_to_datafile(u_int16_t frameid, u_int16_t framelen, unsigned char *data, unsigned char **target)
+ {
+   njb_datafile_t *df = (njb_datafile_t *) *target;
+   char *tmp;
+@@ -3000,9 +2966,7 @@
+   return 0;
+ }
+ 
+-static int terminate_datafile(njb, target)
+-     njb_t *njb;
+-     unsigned char **target;
++static int terminate_datafile(njb_t *njb, unsigned char **target)
+ {
+   njb_datafile_t *df = (njb_datafile_t *) *target;
+   if (add_df_to_njb(njb, df) == -1) {
+@@ -3103,9 +3067,7 @@
+  * These keys are currently read in, but not used for anything.
+  */
+ 
+-static int create_key(postid, target)
+-     u_int32_t postid;
+-     unsigned char **target;
++static int create_key(u_int32_t postid, unsigned char **target)
+ {
+   /* Then create a new key */
+   njb_keyval_t *keyval;
+@@ -3117,11 +3079,7 @@
+   return 0;
+ }
+ 
+-static int add_to_key(frameid, framelen, data, target)
+-     u_int16_t frameid;
+-     u_int16_t framelen;
+-     unsigned char *data;
+-     unsigned char **target;
++static int add_to_key(u_int16_t frameid, u_int16_t framelen, unsigned char *data, unsigned char **target)
+ {
+   njb_keyval_t *keyval = (njb_keyval_t *) *target;
+ 
+@@ -3137,9 +3095,7 @@
+   return 0;
+ }
+ 
+-static int terminate_key(njb, target)
+-     njb_t *njb;
+-     unsigned char **target;
++static int terminate_key(njb_t *njb, unsigned char **target)
+ {
+   njb_keyval_t *key = (njb_keyval_t *) *target;
+   njb3_state_t *state = (njb3_state_t *) njb->protocol_state;
